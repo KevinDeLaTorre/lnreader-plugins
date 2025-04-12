@@ -69,7 +69,7 @@ With their recommendation and a stolen skill, Matt begins his journey to the pea
 
         chapters.push({
           name: chapterName,
-          releaseTime: Date.parse(releaseDate).toString(),
+          releaseTime: releaseDate,
           path: chapterPath,
         });
       });
