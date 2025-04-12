@@ -7,7 +7,7 @@ import { load } from 'cheerio';
 class KemonoSu implements Plugin.PluginBase {
   id = 'kemonosu';
   name = 'kemono.su';
-  version = '1.0.1';
+  version = '1.0.2';
   site = 'https://kemono.su/api/v1/';
   icon = 'src/en/kemonosu/icon.png';
 
@@ -86,24 +86,7 @@ With their recommendation and a stolen skill, Matt begins his journey to the pea
     const chapter_result = await fetchApi(this.site + chapterPath);
     const chapter_json = await chapter_result.json();
 
-    return this.cleanHTMLContent(chapter_json.post.content);
-  }
-
-  cleanHTMLContent(html: string): string {
-    const $ = load(html);
-
-    // Replace <p> tags with newlines
-    $('p').each((_, el) => {
-      $(el).replaceWith(`\n${$(el).text().trim()}\n`);
-    });
-
-    // Replace <br> tags with newlines
-    $('br').each((_, el) => {
-      $(el).replaceWith('\n');
-    });
-
-    // Extract plain text
-    return $.text().trim();
+    return chapter_json.post.content;
   }
 }
 
