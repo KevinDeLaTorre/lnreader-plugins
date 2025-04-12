@@ -7,7 +7,7 @@ import { load } from 'cheerio';
 class KemonoSu implements Plugin.PluginBase {
   id = 'kemonosu';
   name = 'kemono.su';
-  version = '1.0.0';
+  version = '1.0.1';
   site = 'https://kemono.su/api/v1/';
   icon = 'src/en/kemonosu/icon.png';
 
