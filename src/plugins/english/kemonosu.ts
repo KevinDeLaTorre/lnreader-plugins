@@ -6,9 +6,12 @@ import dayjs from 'dayjs';
 class KemonoSu implements Plugin.PluginBase {
   id = 'kemonosu';
   name = 'kemono.su';
-  version = '1.0.4';
+  version = '1.0.5';
   site = 'https://kemono.su/api/v1/';
   icon = 'src/en/kemonosu/icon.png';
+
+  path_of_ascension_cover =
+    'https://static.wikia.nocookie.net/empirenet/images/7/79/The_Path_of_Ascension_cover.jpg';
 
   async sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -20,7 +23,7 @@ class KemonoSu implements Plugin.PluginBase {
     const path_of_ascension_novel = {
       name: 'The Path of Ascension',
       path: 'patreon/user/47400827',
-      cover: '/static/src/en/kemonosu/cover.jpg',
+      cover: this.path_of_ascension_cover,
     };
 
     novels.push(path_of_ascension_novel);
@@ -34,7 +37,7 @@ class KemonoSu implements Plugin.PluginBase {
     const path_of_ascension_novel = {
       name: 'The Path of Ascension',
       path: 'patreon/user/47400827',
-      cover: '/static/src/en/kemonosu/cover.jpg',
+      cover: this.path_of_ascension_cover,
     };
 
     if (
@@ -54,7 +57,7 @@ class KemonoSu implements Plugin.PluginBase {
     const novel: Plugin.SourceNovel = {
       path: novelPath,
       name: 'The Path of Ascension',
-      cover: '/static/src/en/kemonosu/cover.jpg',
+      cover: this.path_of_ascension_cover,
       summary: `The story follows Matt, a young man planning to delve the rifts responsible for the monsters that destroyed his city and killed his parents. His dreams are crushed when his Tier 1 Talent is rated as detrimental, and no guild or group will take him.
 Working at a nearby inn, he meets a mysterious and powerful couple. They give him a chance to join The Path of Ascension, an empire wide race to ascend the Tiers and become living legends.
 With their recommendation and a stolen skill, Matt begins his journey to the peak of power.`,
