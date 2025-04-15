@@ -2,12 +2,11 @@ import { Plugin } from '@typings/plugin';
 import { fetchApi } from '@libs/fetch';
 import { NovelStatus } from '@libs/novelStatus';
 import dayjs from 'dayjs';
-import { load } from 'cheerio';
 
 class KemonoSu implements Plugin.PluginBase {
   id = 'kemonosu';
   name = 'kemono.su';
-  version = '1.0.2';
+  version = '1.0.3';
   site = 'https://kemono.su/api/v1/';
   icon = 'src/en/kemonosu/icon.png';
 
@@ -15,10 +14,7 @@ class KemonoSu implements Plugin.PluginBase {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  async searchNovels(
-    searchTerm: string,
-    page: number,
-  ): Promise<Plugin.NovelItem[]> {
+  async searchNovels(searchTerm: string): Promise<Plugin.NovelItem[]> {
     const novels: Plugin.NovelItem[] = [];
 
     const path_of_ascension_novel = {
@@ -27,7 +23,12 @@ class KemonoSu implements Plugin.PluginBase {
       cover: '/static/src/en/kemonosu/cover.jpg',
     };
 
-    novels.push(path_of_ascension_novel);
+    if (
+      searchTerm.toLowerCase().includes('path') ||
+      searchTerm.toLowerCase().includes('ascension')
+    ) {
+      novels.push(path_of_ascension_novel);
+    }
 
     return novels;
   }
@@ -64,14 +65,21 @@ With their recommendation and a stolen skill, Matt begins his journey to the pea
 
       json_page_data.forEach((chapter: any) => {
         const chapterName = chapter.title;
-        const releaseDate = dayjs(chapter.published).toISOString();
-        const chapterPath = novelPath + '/post/' + chapter.id;
 
-        chapters.push({
-          name: chapterName,
-          releaseTime: releaseDate,
-          path: chapterPath,
-        });
+        // Check if chapterName matches the format "Chapter N"
+        const match = /^Chapter (\d+)$/.exec(chapterName);
+        if (match) {
+          const chapterNumber = parseInt(match[1], 10); // Extract the chapter number
+          const releaseDate = dayjs(chapter.published).toISOString();
+          const chapterPath = novelPath + '/post/' + chapter.id;
+
+          chapters.push({
+            name: chapterName,
+            chapterNumber: chapterNumber, // Set the chapter number
+            releaseTime: releaseDate,
+            path: chapterPath,
+          });
+        }
       });
 
       this.sleep(500);
