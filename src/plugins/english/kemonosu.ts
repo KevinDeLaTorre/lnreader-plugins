@@ -6,12 +6,26 @@ import dayjs from 'dayjs';
 class KemonoSu implements Plugin.PluginBase {
   id = 'kemonosu';
   name = 'kemono.su';
-  version = '1.0.3';
+  version = '1.0.4';
   site = 'https://kemono.su/api/v1/';
   icon = 'src/en/kemonosu/icon.png';
 
   async sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async popularNovels(): Promise<Plugin.NovelItem[]> {
+    const novels: Plugin.NovelItem[] = [];
+
+    const path_of_ascension_novel = {
+      name: 'The Path of Ascension',
+      path: 'patreon/user/47400827',
+      cover: '/static/src/en/kemonosu/cover.jpg',
+    };
+
+    novels.push(path_of_ascension_novel);
+
+    return novels;
   }
 
   async searchNovels(searchTerm: string): Promise<Plugin.NovelItem[]> {
