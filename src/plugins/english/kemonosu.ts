@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 class KemonoSu implements Plugin.PluginBase {
   id = 'kemonosu';
   name = 'kemono.su';
-  version = '1.0.5';
+  version = '1.0.6';
   site = 'https://kemono.su/';
   api = this.site + 'api/v1/';
   icon = 'src/en/kemonosu/icon.png';
