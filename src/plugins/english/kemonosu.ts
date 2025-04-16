@@ -7,7 +7,8 @@ class KemonoSu implements Plugin.PluginBase {
   id = 'kemonosu';
   name = 'kemono.su';
   version = '1.0.5';
-  site = 'https://kemono.su/api/v1/';
+  site = 'https://kemono.su/';
+  api = this.site + 'api/v1/';
   icon = 'src/en/kemonosu/icon.png';
 
   path_of_ascension_cover =
@@ -51,7 +52,7 @@ class KemonoSu implements Plugin.PluginBase {
   }
 
   async parseNovel(novelPath: string): Promise<Plugin.SourceNovel> {
-    const result = await fetchApi(this.site + novelPath + '/posts-legacy');
+    const result = await fetchApi(this.api + novelPath + '/posts-legacy');
     const json_novel_data = await result.json();
 
     const novel: Plugin.SourceNovel = {
@@ -75,9 +76,7 @@ With their recommendation and a stolen skill, Matt begins his journey to the pea
     const page_count = Math.floor(total_chapter_count / 50);
 
     for (let i = 0; i <= page_count; i++) {
-      const page_result = await fetchApi(
-        this.site + novelPath + '?o=' + i * 50,
-      );
+      const page_result = await fetchApi(this.api + novelPath + '?o=' + i * 50);
       const json_page_data = await page_result.json();
 
       json_page_data.forEach((chapter: any) => {
@@ -108,7 +107,7 @@ With their recommendation and a stolen skill, Matt begins his journey to the pea
   }
 
   async parseChapter(chapterPath: string): Promise<string> {
-    const chapter_result = await fetchApi(this.site + chapterPath);
+    const chapter_result = await fetchApi(this.api + chapterPath);
     const chapter_json = await chapter_result.json();
 
     return chapter_json.post.content;
